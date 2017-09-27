@@ -20,5 +20,14 @@ if (navigator.geolocation) {
 function getWeather() {
     $.getJSON("https://fcc-weather-api.glitch.me/api/current?lat=" + lat + "&lon=" + lon, function(json) {
         console.log(JSON.stringify(json));
+        console.log(json.weather[0].main);
+        console.log(json.main.temp);
+        console.log((json.main.temp) * 1.8 + 32);
+
+        var weather = json.weather[0].main;
+        var celsius = Math.round(json.main.temp * 100) / 100;;
+        var farenheit = Math.round((celsius * 1.8 + 32) * 100 ) / 100;
+        console.log("Farenheight: " + farenheit);
+        console.log("Celsius: " + celsius);
     });
 }
