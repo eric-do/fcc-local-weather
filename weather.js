@@ -1,7 +1,8 @@
-$("#geo-fail-alert").removeClass("show");
+$("#switch-temp").hide();
+$("#weather-section").hide();
 
 $(document).ready(function(){
-    $("#switch-temp").hide();
+   
     
     showWeather();
     
@@ -27,8 +28,7 @@ $(document).ready(function(){
             debugger;
             console.warn(`ERROR(${err.code}): ${err.message}`);
             $(".loader").hide();
-            $("#condition").html("Your browser does not support Geolocation!");
-            $("#geo-fail-alert").addClass("show");
+            $("#error").html("Your browser does not support Geolocation!");
         }
     }
 
@@ -36,7 +36,11 @@ $(document).ready(function(){
         return  $.getJSON("https://fcc-weather-api.glitch.me/api/current?lat=" + lat + "&lon=" + lon)
         .done(function(json) { 
             printWeather(json);
-         });
+         })
+        .fail(function(json) {
+            $(".loader").hide();
+            $("#error").html("There was an error getting data from the API server. Reload and try again.");
+        });
      }
      
      function printWeather (json) {
