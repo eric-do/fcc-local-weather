@@ -1,7 +1,8 @@
-
+$("#geo-fail-alert").removeClass("show");
 
 $(document).ready(function(){
     $("#switch-temp").hide();
+    
     showWeather();
     
     function showWeather() {
@@ -23,14 +24,17 @@ $(document).ready(function(){
         }
 
         function error(err) {
+            debugger;
             console.warn(`ERROR(${err.code}): ${err.message}`);
+            $(".loader").hide();
             $("#condition").html("Your browser does not support Geolocation!");
+            $("#geo-fail-alert").addClass("show");
         }
     }
 
     function getWeather(lat, lon) {
         return  $.getJSON("https://fcc-weather-api.glitch.me/api/current?lat=" + lat + "&lon=" + lon)
-        .then(function(json) { 
+        .done(function(json) { 
             printWeather(json);
          });
      }
@@ -43,22 +47,29 @@ $(document).ready(function(){
         var isFarenheit = true;
      
         /* Customize background color based on temperature */
+        updateBackground(farenheit);
+        
+        /* Output weather info */
+        $(".loader").hide();
+        $("#weather-graphic").html('<img src="' + icon + '" alt="' + condition + '">' );
+        $("#condition").html(condition);
+        outputTemperature(isFarenheit, farenheit, celsius);
+        $("#switch-temp").show();
+
+        /* Farenheit <--> Celsius logic */
+        $("#switch-temp").on("click", function(){
+            isFarenheit = !isFarenheit;
+            outputTemperature(isFarenheit, farenheit, celsius);
+        });
+     }
+
+     function updateBackground(farenheit) {
         if (farenheit > 80)
             $("body").css("background-color", "#F9E79F");
         else if (farenheit > 60)
             $("body").css("background-color", "#ABEBC6");
         else
             $("body").css("background-color", "#AEB6BF");
-        
-        /* Output weather info */
-        $("#weather-graphic").html('<img src="' + icon + '" alt="' + condition + '">' );
-        $("#condition").html(condition);
-        outputTemperature(isFarenheit, farenheit, celsius);
-        $("#switch-temp").show();
-        $("#switch-temp").on("click", function(){
-            isFarenheit = !isFarenheit;
-            outputTemperature(isFarenheit, farenheit, celsius);
-        });
      }
      
      function outputTemperature(isFarenheit, farenheit, celsius) {

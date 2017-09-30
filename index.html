@@ -25,12 +25,20 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->        
         
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" id="geo-fail-alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+        </div>
+
         <div class="container">
         <div class="jumbotron text-center" id="weather-box">
+            <div class="loader"></div>
             <h3 class="display-4 weather-section" id="weather-graphic"></h3>
-            <h3 class="display-4 weather-section" id="condition"><div class="loader text-center"></div></h3>
+            <h3 class="display-4 weather-section" id="condition"></h3>
             <h3 class="display-4 weather-section" id="temperature"></h3>
-            <button type="button weather-section" class="btn btn-primary text-center" id="switch-temp">Celsius</button>
+            <button type="button" class="btn btn-primary" id="switch-temp">Celsius</button>
 
         </div>
 
