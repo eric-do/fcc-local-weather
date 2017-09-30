@@ -40,23 +40,36 @@ $(document).ready(function(){
         var icon = json.weather[0].icon;
         var celsius = Math.round(json.main.temp * 100) / 100;;
         var farenheit = Math.round((celsius * 1.8 + 32) * 100 ) / 100;
+        var isFarenheit = true;
      
+        /* Customize background color based on temperature */
         if (farenheit > 80)
             $("body").css("background-color", "#F9E79F");
         else if (farenheit > 60)
             $("body").css("background-color", "#ABEBC6");
         else
             $("body").css("background-color", "#AEB6BF");
-
-        $("#location").html('<img src="' + icon + '" alt="' + condition + '">' );
+        
+        /* Output weather info */
+        $("#weather-graphic").html('<img src="' + icon + '" alt="' + condition + '">' );
         $("#condition").html(condition);
-        $("#temperature").html(farenheit + "° F");
+        outputTemperature(isFarenheit, farenheit, celsius);
         $("#switch-temp").show();
-
-        /* Need to implement switching logic */
         $("#switch-temp").on("click", function(){
-            $("#temperature").html(celsius + "° C");
+            isFarenheit = !isFarenheit;
+            outputTemperature(isFarenheit, farenheit, celsius);
         });
+     }
+     
+     function outputTemperature(isFarenheit, farenheit, celsius) {
+        if (!isFarenheit) {
+                $("#temperature").html(celsius + "° C");
+                $("#switch-temp").html("Farenheit");
+        }
+        else {
+                $("#temperature").html(farenheit + "° F");
+                $("#switch-temp").html("Celsius");
+        }
      }
 });
 

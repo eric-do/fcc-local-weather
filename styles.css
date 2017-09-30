@@ -18,3 +18,8 @@
 #weather-box {
     background-color: white;
 }
+
+.weather-section {
+    margin-top: .5em;
+    margin-bottom: .5em;
+}
